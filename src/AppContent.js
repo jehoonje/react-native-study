@@ -1,18 +1,17 @@
-// src/AppContent.js
 import React, { useEffect, useState } from 'react';
 import {
+  SafeAreaView,
   View,
   Text,
   TextInput,
-  Button,
   FlatList,
-  StyleSheet,
   Alert,
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTodos, addTodoAsync } from './redux/todoSlice';
 import TodoItem from './components/TodoItem';
+import styles from './styles/AppContentStyles'; // 모듈 스타일 임포트
 
 const AppContent = () => {
   const dispatch = useDispatch();
@@ -39,41 +38,28 @@ const AppContent = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>DREAM BIG, START SMALL, ACT NOW.</Text>
-      <TextInput
-        style={styles.input}
-        value={newTask}
-        onChangeText={setNewTask}
-        placeholder="Enter a new task"
-        onSubmitEditing={handleAddTodo}
-      />
-      <Button title="Add Todo" onPress={handleAddTodo} />
-      <FlatList
-        data={todos}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <TodoItem todo={item} />}
-      />
-    </View>
+    <SafeAreaView style={styles.safeContainer}>
+      <View style={styles.container}>
+        <Text style={styles.title}>DREAM BIG, START SMALL, ACT NOW.</Text>
+        <TextInput
+          style={styles.input}
+          value={newTask}
+          onChangeText={setNewTask}
+          placeholder="Enter a new task"
+          placeholderTextColor="#aaa"
+          onSubmitEditing={handleAddTodo}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleAddTodo}>
+          <Text style={styles.buttonText}>Add Todo</Text>
+        </TouchableOpacity>
+        <FlatList
+          data={todos}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <TodoItem todo={item} />}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 export default AppContent;
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    marginTop: 50,
-  },
-  title: {
-    marginBottom: 20,
-    fontSize: 20,
-    textAlign: 'center',
-  },
-  input: {
-    padding: 8,
-    borderWidth: 1,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-});

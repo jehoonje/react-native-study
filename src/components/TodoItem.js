@@ -1,12 +1,5 @@
-// src/components/TodoItem.js
 import React from 'react';
-import {
-  View,
-  Text,
-  Button,
-  Alert,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deleteTodoAsync } from '../redux/todoSlice';
 
@@ -26,7 +19,9 @@ const TodoItem = ({ todo }) => {
   return (
     <View style={styles.todoItem}>
       <Text style={styles.todoText}>{todo.task}</Text>
-      <Button title="Delete" onPress={handleDelete} color="#dc3545" />
+      <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+        <Text style={styles.deleteButtonText}>Delete</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -35,13 +30,24 @@ export default TodoItem;
 
 const styles = StyleSheet.create({
   todoItem: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#444',  // 아이템 배경을 짙은 회색으로 변경
     marginBottom: 10,
     padding: 20,
     borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   todoText: {
     fontSize: 18,
-    marginBottom: 5,
+    color: 'white',  // 글씨를 흰색으로 변경
+  },
+  deleteButton: {
+    backgroundColor: '#800020',  // 삭제 버튼 색을 붉은색으로 변경
+    padding: 8,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: 'white',  // 삭제 버튼 텍스트를 흰색으로 변경
   },
 });
